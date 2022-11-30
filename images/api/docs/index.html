@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest API endpoints</title>
+</head>
+
+<body>
+    <main>
+        <ul>
+            <li>
+                <h1>
+                    GET:
+                </h1>
+                <ul>
+                    <li>
+                        <h2>/getRoomData</h2>
+                        <p>returns object with result object room <br> <br>
+                        </p>
+                    </li>
+                    <li>
+                        <h2>/getAllRoomData</h2>
+                        <p>returns object with result object rooms(arr(room))</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul>
+            <li>
+                <h1>POST:</h1>
+                <ul>
+                    <li>
+                        <h2>
+                            /receiveRoomData
+                        </h2>
+                        <p>post sensor data to database</p>
+                    </li>
+                    <li>
+                        <h2>
+                            /addRoom
+                        </h2>
+                        <p>add a new room to the database</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul>
+            <li>
+                <h1>PUT:</h1>
+                <ul>
+                    <li>
+                        <h2>
+                            /updateRoom
+                        </h2>
+                        <p>update already existing room</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <h1>DELETE:</h1>
+                <ul>
+                    <li>
+                        <h2>
+                            /deleteRoom
+                        </h2>
+                        <p>delete certain room and all it's data from database</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        </ul>
+    </main>
+</body>
+
+</html>
