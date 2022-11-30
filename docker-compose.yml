@@ -7,15 +7,19 @@ services:
     container_name: api
     ports:
       - 80:3000
+    environment:
+      MYSQL_HOST: store
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - ./images/api/src:/usr/app/src
       
   store:
     image: mysql
+    container_name: store
     environment: 
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USERNAME: ${MYSQL_USERNAME}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - 3307:3306
@@ -24,8 +28,36 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
+    container_name: phpmyadmin
     restart: always
     ports : 
      - 8080:80
     environment:
       PMA_HOST: store
+
+  mqttBroker:
+    image: eclipse-mosquitto:1.6.12
+    container_name: mqttBroker
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ./images/mosquitto/conf:/mosquitto/conf
+      - ./images/mosquitto/data:/mosquitto/data
+      - ./images/mosquitto/log:/mosquitto/log
+
+  mqtt:
+    build: ./images/mqtt
+    container_name: mqtt
+    ports:
+     - 3000:3000
+    environment:
+      MQTT_ADDR: mqtt://mqttBroker
+      MYSQL_HOST: store
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+     - ./images/mqtt/src:/usr/app/src
+ 
