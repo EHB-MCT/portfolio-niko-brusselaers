@@ -1,12 +1,7 @@
-/**
- * used sources:
- * 
- *-convcert mqtt to json: https: //stackoverflow.com/questions/44330464/how-to-create-json-using-mqtt-javascript
- */
-
 const mqtt = require("mqtt")
 const connection = require('./database/connection.js')
 
+//defining client name and moquito broker adress
 const clientId = "MQTT_API"
 const connectUrl = process.env.MQTT_ADDR
 
@@ -15,7 +10,6 @@ const connectUrl = process.env.MQTT_ADDR
  * object template
  * 
  * roomdata{
- *      id(int)
  *      roomName(str),
  *      roomSensor(str),
  *      temperatureData(arr(int))
@@ -25,6 +19,7 @@ const connectUrl = process.env.MQTT_ADDR
  */
 
 
+//connect to mosquito broker
 const client = mqtt.connect(connectUrl, {
     clientId: clientId,
     protocolId: 'MQIsdp',
@@ -34,14 +29,25 @@ const client = mqtt.connect(connectUrl, {
     reconnectPeriod: 1000
 })
 
-
+//subscribe to defined topics
 client.subscribe('arduino/getSensorData')
 client.subscribe('arduino/getRoom')
 
 
+/**
+ * check if there are new message on subscribed topics
+ * 
+ * @params objects - topic(str),
+ *                 - payload(roomData() || room(str))
+ */
 client.on('message', async (topic, payload) => {
     connection.connect();
 
+    /**
+     * insert payload data inside sensorData table
+     *
+     * @params object roomData
+     */
     if (topic === 'arduino/getSensorData') {
         try {
             let roomData = JSON.parse(payload.toString())
@@ -53,7 +59,12 @@ client.on('message', async (topic, payload) => {
     }
 
 
-    
+    /**
+     * check if room already exist in rooms table,
+     * if not insert the room inside rooms table
+     *
+     * @params object room(str)
+     */
     if (topic === 'arduino/getRoom') {
         let data = JSON.parse(payload.toString())
         console.log(data);
