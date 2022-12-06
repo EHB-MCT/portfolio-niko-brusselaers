@@ -56,16 +56,6 @@ app.get("/", (request, response) => {
  */
 app.get("/getRoomData", async (request, response) => {
 
-    //TODO: fetch room noise level data from database
-    connection.connect();
-    try {
-        let result = await connection.execute(`INSERT INTO sensorData (room, sensorDevice,Value) VALUES (?,?,?)`, ["B.101", "ESP32-A", 2251])
-        console.log(result);
-        response.status(200).send(result)
-    } catch (error) {
-        console.log(error);
-        response.status(400).send(error)
-    }
 
 
 })
