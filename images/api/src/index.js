@@ -1,6 +1,7 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const connection = require('./database/connection.js')
+
 const {
     request,
     response
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(express.static("../docs"))
 
+
 app.listen(3000, (err) => {
     if (!err) {
         console.log("http://localhost");
@@ -24,18 +26,14 @@ app.listen(3000, (err) => {
 /**
  * object template
  * 
- * room{
+ * roomdata{
  *      id(int)
  *      roomName(str),
  *      roomSensor(str),
  *      temperatureData(arr(int))
  * }
  * 
- * roomData{
- *          roomSensor(str),
- *          temperatureData(arr(int))
- * 
- * }
+ *
  */
 
 
@@ -56,10 +54,18 @@ app.get("/", (request, response) => {
  * @params object roomName(str)
  * @returns object with result object room
  */
-app.get("/getRoomData", (request, response) => {
+app.get("/getRoomData", async (request, response) => {
 
     //TODO: fetch room noise level data from database
-
+    connection.connect();
+    try {
+        let result = await connection.execute(`INSERT INTO sensorData (room, sensorDevice,Value) VALUES (?,?,?)`, ["B.101", "ESP32-A", 2251])
+        console.log(result);
+        response.status(200).send(result)
+    } catch (error) {
+        console.log(error);
+        response.status(400).send(error)
+    }
 
 
 })
@@ -84,7 +90,8 @@ app.get("/getAllRoomsData", async (request, response) => {
  */
 app.post("/receiveRoomData", (request, response) => {
 
-    //TODO; insert room noise level data inside database
+    //TODO: retrieve room noise level data from sensor and insert inside database
+
 
 })
 
