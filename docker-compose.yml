@@ -12,6 +12,7 @@ services:
       
   store:
     image: mysql
+    container_name: store
     environment: 
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USERNAME: ${MYSQL_USERNAME}
@@ -21,6 +22,7 @@ services:
       - 3307:3306
     volumes:
       - /usr/app/lib/mysql
+      - ./images/mysql/init:/docker-entrypoint-initdb.d
 
   phpmyadmin:
     image: phpmyadmin
