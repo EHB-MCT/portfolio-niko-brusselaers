@@ -115,11 +115,36 @@ app.put("/updateRoomSensor", (request, response) => {
  * DELETE endpoint, delete room out database
  * 
  * @params object room, containing id(int) and roomName(str) 
- * @returns object with result of statuscode(str)
+ * @returns object with result(str) and statuscode(int)
  */
 app.delete("/deleteRoom", (request, response) => {
-
+    let roomName = request.body.roomName
     //TODO: delete room and room data from database
+    try {
+        // retrieving room to check if it exists
+        connection.query(`SELECT * FROM rooms WHERE (roomName) like (?)`, [roomName],
+            function (error, results, fields) {
+                if (!results.length) {
+                    //if the room is not inside database send error response back
+                    response.status(400).send({
+                        error: "room doesnt exist"
+                    })
+                } else {
+                    // remove all data from room in rooms and sensorData tables
+                    connection.execute(`DELETE FROM rooms WHERE (roomName) like (?) `, [roomName])
+                    connection.execute(`DELETE FROM sensorData WHERE (room) like (?) `, [roomName])
+                    response.status(200).send({
+                        result: "ok"
+                    })
+                }
+            })
+    } catch (error) {
+        //displaying error in terminal and sending it back via response
+        console.log(error);
+        response.status(500).send({
+            error: error
+        })
+    }
 
 
 })
