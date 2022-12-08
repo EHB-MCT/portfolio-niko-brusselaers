@@ -63,12 +63,29 @@ app.get("/getRoomData", async (request, response) => {
 /**
  * GET endpoint, return the list of rooms
  * 
- * @returns object with result object rooms(arr(room))
+ * @returns object with result object roomNames(arr(str))
  */
-app.get("/getAllRoomsData", async (request, response) => {
+app.get("/getAllRooms", async (request, response) => {
 
-    //TODO: fetch list of rooms noise level data from database
-
+    try {
+        // retrieving all room names from rooms table and sending data back via response
+        connection.query(`SELECT * FROM rooms `,
+            function (error, results, fields) {
+                let roomNames = []
+                for (let i = 0; i < results.length; i++) {
+                    roomNames.push(results[i].roomName)
+                }
+                response.status(200).send({
+                    roomNames: roomNames
+                })
+            })
+    } catch (error) {
+        //displaying error in terminal and sending it back via response
+        console.log(error);
+        response.status(500).send({
+            error: error
+        })
+    }
 
 })
 
