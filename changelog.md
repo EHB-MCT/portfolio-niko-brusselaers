@@ -9,3 +9,11 @@
  - MQTT api
    - inserting incomeing sensor data inside database
    - inserting incoming new rooms inside database
+
+## [0.2.0] - 2022-12-08
+
+### added
+  - api
+    - deleteRoom endpoint
+    - getAllRooms endpoint
+    - getRoomData endpoint
