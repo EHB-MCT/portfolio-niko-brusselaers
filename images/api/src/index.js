@@ -29,11 +29,13 @@ app.listen(3000, (err) => {
  * roomdata{
  *      id(int)
  *      roomName(str),
- *      roomSensor(str),
- *      temperatureData(arr(int))
+ *      temperatureData(arr(sensorData))
  * }
  * 
- *
+ * sensordata {
+ *              value(int),
+ *              date(date) 
+ * }
  */
 
 
@@ -52,10 +54,35 @@ app.get("/", (request, response) => {
  * GET endpoint, return object room
  * 
  * @params object roomName(str)
- * @returns object with result object room
+ * @returns object with result object roomData
  */
 app.get("/getRoomData", async (request, response) => {
+    const roomName = request.body.roomName
 
+    try {
+        //retrieving room sensor data from sensorData table
+        connection.promise().query(`SELECT * FROM (sensorData) WHERE room like (?)`, [roomName])
+            .then(([rows, fields]) => {
+                // making a new object roomData with roomName and a array of sensorData
+                let roomData = {
+                    roomName: rows[0].room,
+                    temperatureData: []
+
+                }
+
+                for (let i = 0; i < rows.length; i++) {
+                    roomData.temperatureData.push({
+                        value: rows[i].value,
+                        date: rows[i].date
+                    })
+                }
+
+                response.status(200).send(roomData)
+
+            })
+    } catch (error) {
+        response.status(400).send(error)
+    }
 
 
 })
