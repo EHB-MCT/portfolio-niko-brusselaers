@@ -13,7 +13,7 @@ app.use(express.static("../docs"))
 
 app.listen(3000, (err) => {
     if (!err) {
-        console.log("http://localhost");
+        console.log("http://localhost:3000");
     } else {
         console.log(err);
     }
