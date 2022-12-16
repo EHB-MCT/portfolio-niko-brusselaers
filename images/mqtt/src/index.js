@@ -59,35 +59,4 @@ client.on('message', async (topic, payload) => {
             console.log(error);
         }
     }
-
-
-    /**
-     * check if room already exist in rooms table,
-     * if not insert the room inside rooms table
-     *
-     * @params object room(str)
-     */
-    if (topic === 'arduino/getRoom') {
-        let data = JSON.parse(payload.toString())
-        try {
-            connection.query(`SELECT * FROM rooms WHERE roomName LIKE ${data.room}`,
-                function (error, result, fields) {
-                    console.log(result);
-                    try {
-                        if (!result.room == undefined) {
-                            connection.execute(`INSERT INTO rooms (roomName) VALUES (?)`, [data.room])
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
-                })
-
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
-
-
-
 })
