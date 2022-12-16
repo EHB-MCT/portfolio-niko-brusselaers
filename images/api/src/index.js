@@ -1,12 +1,6 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const connection = require('./database/connection.js')
-
-const {
-    request,
-    response
-} = require("express")
-
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true

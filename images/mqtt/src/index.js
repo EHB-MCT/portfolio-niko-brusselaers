@@ -51,8 +51,10 @@ client.on('message', async (topic, payload) => {
     if (topic === 'arduino/getSensorData') {
         try {
             let roomData = JSON.parse(payload.toString())
-            console.log(data)
-            connection.query(`INSERT INTO sensorData (room, sensorDevice,Value) VALUES (?,?,?)`, [data.room, data.deviceName, data.sensorValue])
+            console.log(roomData);
+            if (Math.abs(roomData.sensorValue) <= 110) {
+                connection.query(`INSERT INTO sensorData (room, sensorDevice,Value) VALUES (?,?,?)`, [roomData.room, roomData.deviceName, Math.abs(roomData.sensorValue)])
+            }
         } catch (error) {
             console.log(error);
         }
@@ -67,13 +69,12 @@ client.on('message', async (topic, payload) => {
      */
     if (topic === 'arduino/getRoom') {
         let data = JSON.parse(payload.toString())
-        console.log(data);
         try {
             connection.query(`SELECT * FROM rooms WHERE roomName LIKE ${data.room}`,
                 function (error, result, fields) {
                     console.log(result);
                     try {
-                        if (!result.length) {
+                        if (!result.room == undefined) {
                             connection.execute(`INSERT INTO rooms (roomName) VALUES (?)`, [data.room])
                         }
                     } catch (error) {
