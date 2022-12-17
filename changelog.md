@@ -23,3 +23,9 @@
 ### fixed
 
   - added a health check to see if the mysql database is fully opertional to prevent rest and mqtt api from crashing from being unable to       connect to database
+
+## [0.3.1] - 2022-12-16
+
+### added
+  - api
+    - addRoom endpoint
