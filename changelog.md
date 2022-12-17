@@ -29,3 +29,15 @@
 ### added
   - api
     - addRoom endpoint
+
+## [0.3.1] - 2022-12-16
+
+### fixed
+  - api
+    - changed getRoomData from GET to POST endpoint
+  - mysql
+    - typo in sensorData table
+
+### removed
+  - api
+    - receiveRoomData endpoint
