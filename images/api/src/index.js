@@ -22,6 +22,11 @@ app.listen(3000, (err) => {
 /**
  * object template
  * 
+ * room {
+ *      id(int) 
+ *      roomName(str)
+ * }
+ * 
  * roomdata{
  *      id(int)
  *      roomName(str),
@@ -128,13 +133,41 @@ app.post("/receiveRoomData", (request, response) => {
 /**
  * POST endpoint, insert new room into database
  * 
- * @params object room, containing roomName(str) and roomSensor(str)
+ * @params object roomName(str)
  * @returns object with result of inserted room
  */
 app.post("/addRoom", (request, response) => {
+    const roomName = request.body.roomName
 
     //TODO: insert room inside database
-
+    try {
+        // retrieving all room names from rooms table and sending data back via response
+        connection.query(`SELECT * FROM rooms where roomName like ?`, [roomName],
+            function (error, result, fields) {
+                console.log(result);
+                if (result.length == 0) {
+                    let querry = connection.query(`INSERT INTO rooms (roomName) VALUES (?)`, [roomName],
+                        function (error, result, fields) {
+                            response.status(200).send({
+                                room:{
+                                    roomId : result.id,
+                                    roomName: result.roomName
+                                }
+                            })
+                        })
+                } else {
+                    response.status(400).send({
+                        error: 'room already exists'
+                    })
+                }
+            })
+    } catch (error) {
+        //displaying error in terminal and sending it back via response
+        console.log(error);
+        response.status(500).send({
+            error: error
+        })
+    }
 })
 
 /**

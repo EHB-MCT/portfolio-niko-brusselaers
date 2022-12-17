@@ -22,4 +22,4 @@
 
 ### fixed
 
-  - added a health check to see if the mysql database is fully opertional to prevent rest and mqtt api from crashing from being unable to connect to database
+  - added a health check to see if the mysql database is fully opertional to prevent rest and mqtt api from crashing from being unable to       connect to database
