@@ -81,18 +81,6 @@ app.get("/getAllRooms", async (request, response) => {
 
 })
 
-/**
- * POST endpoint, insert sensor data into database
- * 
- * @params object roomData, containing roomSensor(str) and temperatureData(arr(int))
- * @returns object with result of statuscode(str)
- */
-app.post("/receiveRoomData", (request, response) => {
-
-    //TODO: retrieve room noise level data from sensor and insert inside database
-
-
-})
 
 /**
  * POST endpoint, insert new room into database
