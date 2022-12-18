@@ -35,6 +35,8 @@
 ### fixed
   - api
     - changed getRoomData from GET to POST endpoint
+  - mysql
+    - typo in sensorData table
 
 ### removed
   - api

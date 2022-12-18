@@ -53,7 +53,7 @@ client.on('message', async (topic, payload) => {
             let roomData = JSON.parse(payload.toString())
             console.log(roomData);
             if (Math.abs(roomData.sensorValue) <= 110) {
-                connection.query(`INSERT INTO sensorData (room, sensorDevice,Value) VALUES (?,?,?)`, [roomData.room, roomData.deviceName, Math.abs(roomData.sensorValue)])
+                connection.query(`INSERT INTO sensorData (room, sensorDevice,value) VALUES (?,?,?)`, [roomData.room, roomData.deviceName, Math.abs(roomData.sensorValue)])
             }
         } catch (error) {
             console.log(error);

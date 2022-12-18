@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `sensorData` (
   `id` bigint NOT NULL,
   `room` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `sensorDevice` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Value` bigint NOT NULL,
-  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `value` bigint NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
