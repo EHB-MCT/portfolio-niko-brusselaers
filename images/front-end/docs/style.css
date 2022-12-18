@@ -1,0 +1,123 @@
+/****************
+***** reset *****
+****************/
+
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+/****************
+*** variables ***
+****************/
+
+:root {
+    --darkBlue: #2C5784;
+    --black: #262322;
+    --white: #FFF9FB
+}
+
+/****************
+**** general ****
+****************/
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: var(--black);
+
+}
+
+main {
+    width: 80vw;
+    margin: 10vh 0;
+    height: 80vh;
+}
+
+/****************
+****** nav ******
+****************/
+
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 80vh;
+    padding: 10vh 5vw;
+    width: 5vw;
+    background-color: var(--darkBlue);
+}
+
+div.roomLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+nav a {
+    padding: 2rem 0;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+.activePage {
+    background-color: var(--black);
+    color: var(--white);
+    transform: translate(3em);
+    padding: 1rem 8rem 1rem 3rem;
+    border-radius: 2rem 0 0 2rem;
+
+}
+
+/****************
+****** main ******
+****************/
+
+h1.greetingTitle {
+    color: var(--white);
+    text-align: center;
+    margin-top: 30vh;
+    font-size: 50pt;
+}
+
+div.dataAverages {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70vw;
+    margin: 0 5vw;
+}
+
+div.noiseLevelNumbers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 4rem 6rem;
+    border-radius: 2rem;
+    -webkit-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    background-color: var(--white);
+}
+
+div.noiseLevelNumbers h1 {
+    padding-top: 2rem;
+    font-weight: bold;
+    font-size: 30pt;
+}
+
+div.dataGraph {
+    width: 70vw;
+    height: 50vh;
+    margin: 5vh 5vw;
+    border-radius: 2rem;
+    -moz-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    background-color: var(--white);
+
+}
