@@ -5,6 +5,15 @@
  *      value(int),
  *      date(str)
  * }
+ * 
+ * filteredData{
+ *          curren(int),
+ *          hour(arr(sensorData)),
+ *          day(arr(sensorData)),
+ *          week(arr(sensorData)),
+ *          month(arr(sensorData))
+ *          
+ * }
  */
 
 
@@ -12,7 +21,7 @@
  * // filter data by current, hour, day, week, month
  * 
  * @param  dataArray(arr(sensorData))
- * @returns filteredData
+ * @returns object with result filteredData
  */
 const filterByDate = (dataArray) => {
     let filteredData = {

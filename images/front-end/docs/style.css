@@ -112,12 +112,41 @@ div.noiseLevelNumbers h1 {
 }
 
 div.dataGraph {
+    display: flex;
+    flex-direction: row;
     width: 70vw;
-    height: 50vh;
+    height: 55vh;
     margin: 5vh 5vw;
     border-radius: 2rem;
-    -moz-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: rgb(0 0 0 / 75%) 5px 5px 16px 0px;
     background-color: var(--white);
+    align-items: center;
 
+}
+
+div.graphOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.graphOptions a {
+    padding: 0 6rem;
+    text-decoration: none;
+    color: var(--black);
+    font-weight: bold;
+    font-size: 15pt;
+    border-bottom: var(--black) solid 1px;
+    padding: 5.45vh;
+    width: 10vw;
+    text-align: center;
+}
+
+div.graphOptions a:last-child {
+    border: none;
+}
+
+.chartContainer {
+    width: 80% !important;
+    height: 95% !important;
 }

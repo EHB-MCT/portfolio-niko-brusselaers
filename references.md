@@ -7,4 +7,5 @@
     -   docker mosquitto eclipse documentation: https://hub.docker.com/_/eclipse-mosquitto
     -   docker phpmyadmin documentation: https://hub.docker.com/r/phpmyadmin/phpmyadmin/
     -   how to add hours,day,week,month,... to new date: https://stackoverflow.com/questions/1050720/how-to-add-hours-to-a-date-object
-    - array.reduce : https://www.youtube.com/watch?v=s1XVfm5mIuU&ab_channel=WebDevSimplified
+    -   array.reduce : https://www.youtube.com/watch?v=s1XVfm5mIuU&ab_channel=WebDevSimplified
+    -   chart.js : https://www.youtube.com/watch?v=sE08f4iuOhA&ab_channel=TraversyMedia

@@ -11,7 +11,7 @@
  * count all values up and divide them by array length to receive an average
  * 
  * @param dataArray(arr(sensorData))
- * @returns averageNumber(int)
+ * @returns object with result averageNumber(int)
  */
 const getAverageNumber = (dataArray) => {
     //count all numbers in dataArray up and store in average variable
