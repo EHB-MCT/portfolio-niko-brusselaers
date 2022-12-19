@@ -6,15 +6,17 @@ import loginWithId from "./fetch/loginWithId"
 import getAverageNumber from "./math/getAverageNumber.js"
 import getGraph from "./math/getGraph.js"
 
+var URL = "http://localhost:3001"
 
 
 /**
  * get all rooms when loading page and insert all roomnames in navigation
  * 
+ * @params URL(str)
  * @see getAllRooms
  * 
  */
-getAllRooms()
+getAllRooms(URL)
 
 const roomPages = document.querySelector('#roomLinks')
 /**
@@ -37,7 +39,7 @@ roomPages.addEventListener("click", async (element) => {
     }
     if (element.target != element.currentTarget) {
         element.target.classList.add("activePage")
-        var FILTERED_DATA = await getRoomData(element.target.innerHTML)
+        var FILTERED_DATA = await getRoomData(element.target.innerHTML, URL)
         const mainContainer = document.getElementById("mainContainer")
         // get average for hour,day,week,month
         let average = {
@@ -120,10 +122,10 @@ const adminPage = document.getElementById('adminPage')
 
 adminPage.addEventListener('click', async () => {
     const mainContainer = document.getElementById('mainContainer')
-    let isLoggedIn = await loginWithId()
+    let isLoggedIn = await loginWithId(URL)
     //if user has logged in during current session, show admin page
     if (isLoggedIn) {
-        displayAdminPage()
+        displayAdminPage(URL)
     } else {
         //if user hasn't previously logged in during current session, insert login form
         const mainContainer = document.getElementById('mainContainer')
@@ -139,10 +141,10 @@ adminPage.addEventListener('click', async () => {
         const loginForm = document.getElementById('loginForm')
         loginForm.addEventListener("submit", async (event) => {
             event.preventDefault()
-            isLoggedIn = login()
+            isLoggedIn = login(URL)
             //if user credentials are valid, show admin page
             if (isLoggedIn) {
-                displayAdminPage()
+                displayAdminPage(URL)
             }
         })
 

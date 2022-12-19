@@ -1,11 +1,12 @@
-const url = "http://localhost:3001"
+
 
 /**
  * login user with username and password
  * 
+ * @params URL(str)
  * @returns isLoggedIn(bool)
  */
-const login = async () => {
+const login = async (URL) => {
     let statusCode
     // retrieve username and password values from loginForm
     const userCredentials = {
@@ -13,7 +14,7 @@ const login = async () => {
         password: document.getElementById('password').value
     }
     // do a fetch call to check if user credentials are valid
-    await fetch(`${url}/login`, {
+    await fetch(`${URL}/login`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

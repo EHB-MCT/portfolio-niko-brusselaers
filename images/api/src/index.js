@@ -156,8 +156,9 @@ app.post("/getRoomData", async (request, response) => {
         //retrieving room sensor data from sensorData table
         connection.promise().query(`SELECT * FROM (sensorData) WHERE room LIKE (?)`, [roomName])
             .then(([rows, fields]) => {
+                console.log(rows);
                 // making a new object roomData with roomName and a array of sensorData
-                console.log(rows[2].Value);
+                console.log(rows[2].value);
                 let roomData = {
                     roomName: rows[0].room,
                     temperatureData: []

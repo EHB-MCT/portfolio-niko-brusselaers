@@ -1,12 +1,12 @@
-const url = "http://localhost:3001"
+
 
 
 /**
  * login user with stored userId
- * 
+ * @params URL(str) *
  * @returns isLoggedIn(bool)
  */
-const loginWithId = async () => {
+const loginWithId = async (URL) => {
     let isLoggedIn = false
     // retrieve userId and username from sessionStorage
     const userCredentialsId = {
@@ -18,7 +18,7 @@ const loginWithId = async () => {
         isLoggedIn = false
     } else {
         // if userId and username are present, do a fetch call to check if credentials are valid
-        await fetch(`${url}/loginWithId`, {
+        await fetch(`${URL}/loginWithId`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

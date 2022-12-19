@@ -1,7 +1,7 @@
 import filterByDate from "../filtering/filterByDate"
 import getAverageNumber from "../math/getAverageNumber"
 import getGraph from "../math/getGraph"
-let url = "http://localhost:3001"
+
 
 /**
  * object template
@@ -29,13 +29,13 @@ let url = "http://localhost:3001"
  * 
  * @see filterByDate
  * 
- * @param  roomName(str) 
+ * @params roomName(str), URL(str)
  * @returns filteredData
  * 
  */
-const getRoomData = (roomName) => {
+const getRoomData = (roomName, URL) => {
     // get room data from roomName
-    return fetch(`${url}/getRoomData`, {
+    return fetch(`${URL}/getRoomData`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

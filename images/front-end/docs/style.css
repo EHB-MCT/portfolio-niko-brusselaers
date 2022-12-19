@@ -35,6 +35,19 @@ main {
     height: 80vh;
 }
 
+::-webkit-scrollbar {
+    width: .5rem;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(77, 76, 76, 0.697);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--black)
+}
+
+
 /****************
 ****** nav ******
 ****************/
@@ -53,12 +66,16 @@ nav {
 div.roomLinks {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
+    overflow: auto;
+    direction: rtl;
+    padding: 0 5vw;
+    height: 60vh;
 }
 
+
 nav a {
-    padding: 2rem 0;
+    padding: 3rem 0;
     color: white;
     text-decoration: none;
     font-weight: bold;
@@ -68,9 +85,9 @@ nav a {
 .activePage {
     background-color: var(--black);
     color: var(--white);
-    transform: translate(3em);
-    padding: 1rem 8rem 1rem 3rem;
-    border-radius: 2rem 0 0 2rem;
+    padding: 1rem 2rem;
+    margin: 2rem 1rem;
+    border-radius: 4rem;
 
 }
 
@@ -222,7 +239,7 @@ div#adminPageContainer {
 }
 
 div.addRoom {
-    margin: 5rem 0 5rem 5rem;
+    margin: 5rem 0 2rem 5rem;
 }
 
 form#addRoomForm {
@@ -234,33 +251,37 @@ form#addRoomForm button {
     margin: 1rem 0;
     align-self: center;
     width: 10rem;
-    height: 2rem;
+    height: 4rem;
     border-radius: 4rem;
     background-color: var(--black);
-    color: var(--white)
+    color: var(--white);
+    font-size: 15pt;
+
 }
 
 form#addRoomForm input {
     width: 15rem;
-    height: 2rem;
+    height: 4rem;
     padding: 0 2.5rem;
     border-radius: 4rem;
     color: var(--white);
     background-color: var(--black);
+    font-size: 15pt;
 }
 
 div.deleteRoom {
-    margin: 5rem 0 5rem 5rem;
+    margin: 1rem 0 5rem 5rem;
 }
 
 div#roomsContainer {
-    display: flex;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     width: 42vw;
     height: 32vh;
     overflow: auto;
+    align-items: flex-start;
+    align-content: flex-start;
 
 }
 
@@ -278,11 +299,11 @@ div#roomsContainer div {
 
 }
 
-div#roomsContainer div h2{
+div#roomsContainer div h2 {
     color: var(--white)
 }
 
-div#roomsContainer div button{
+div#roomsContainer div button {
     padding: 1rem 1.25rem;
     border-radius: 100rem;
     background-color: var(--white);
