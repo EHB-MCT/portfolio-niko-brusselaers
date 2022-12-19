@@ -53,6 +53,11 @@ app.listen(3000, (err) => {
  *      
  *      
  * }
+ * 
+ * userCredentialsId{
+ *          userId(int);
+ *          username(str)
+ * }
  */
 
 
@@ -172,6 +177,45 @@ app.post("/getRoomData", async (request, response) => {
     } catch (error) {
         response.status(400).send(error)
     }
+
+
+})
+
+
+/**
+ * POST endpoint, check if user credentials are correct
+ * 
+ * @params userCredentialsId
+ * @returns isUserValid(bool)
+ */
+app.post('/loginWithId', (request, response) => {
+    let userCredentialsId = request.body.userCredentialsId
+    //if any data is missing, send error response back
+    if (!userCredentialsId.userId || !userCredentialsId.username) {
+        response.status(400).send({
+            error: "missing data in request"
+        })
+    } else {
+        try {
+            //retrieve requested data from users table
+            connection.query(`SELECT * FROM users WHERE id = ? AND username = ? `, [userCredentialsId.userId, userCredentialsId.username],
+                function (error, result, fields) {
+                    //if result is not empty, return true else return false
+                    if (result.length != 0) {
+                        response.status(200).send({
+                            isUserValid: true
+                        })
+                    } else {
+                        response.status(401).send({
+                            isUserValid: false
+                        })
+                    }
+                })
+        } catch (error) {
+            response.status(500).send(error.message)
+        }
+    }
+
 
 
 })
