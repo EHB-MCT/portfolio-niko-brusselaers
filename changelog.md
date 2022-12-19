@@ -30,7 +30,7 @@
   - api
     - addRoom endpoint
 
-## [0.3.1] - 2022-12-16
+## [0.3.2] - 2022-12-16
 
 ### fixed
   - api
@@ -41,3 +41,12 @@
 ### removed
   - api
     - receiveRoomData endpoint
+
+## [0.4.2] - 2022-12-19
+
+### added
+  - api
+    - login endpoint
+    - loginWithId endpoint
+  - mysql
+    - users table with collumns: id, username and password

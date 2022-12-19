@@ -2,6 +2,10 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const connection = require('./database/connection.js')
 const cors = require('cors')
+const {
+    request,
+    response
+} = require("express")
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
@@ -34,8 +38,25 @@ app.listen(3000, (err) => {
  * }
  * 
  * sensordata {
- *              value(int),
- *              date(date) 
+ *      value(int),
+ *      date(date) 
+ * }
+ * 
+ * userCredentials {
+ *      username(str)
+ *      password(str)
+ * }
+ * 
+ * userData{
+ *      userId(int),
+ *      username(str),
+ *      
+ *      
+ * }
+ * 
+ * userCredentialsId{
+ *          userId(int);
+ *          username(str)
  * }
  */
 
@@ -94,15 +115,15 @@ app.post("/addRoom", (request, response) => {
     //TODO: insert room inside database
     try {
         // retrieving all room names from rooms table and sending data back via response
-        connection.query(`SELECT * FROM rooms where roomName like ?`, [roomName],
+        connection.query(`SELECT * FROM rooms where roomName LIKE ?`, [roomName],
             function (error, result, fields) {
                 console.log(result);
                 if (result.length == 0) {
                     let querry = connection.query(`INSERT INTO rooms (roomName) VALUES (?)`, [roomName],
                         function (error, result, fields) {
                             response.status(200).send({
-                                room:{
-                                    roomId : result.id,
+                                room: {
+                                    roomId: result.id,
                                     roomName: result.roomName
                                 }
                             })
@@ -133,7 +154,7 @@ app.post("/getRoomData", async (request, response) => {
 
     try {
         //retrieving room sensor data from sensorData table
-        connection.promise().query(`SELECT * FROM (sensorData) WHERE room like (?)`, [roomName])
+        connection.promise().query(`SELECT * FROM (sensorData) WHERE room LIKE (?)`, [roomName])
             .then(([rows, fields]) => {
                 // making a new object roomData with roomName and a array of sensorData
                 console.log(rows[2].Value);
@@ -157,6 +178,87 @@ app.post("/getRoomData", async (request, response) => {
         response.status(400).send(error)
     }
 
+
+})
+
+
+/**
+ * POST endpoint, check if user credentials are correct
+ * 
+ * @params userCredentialsId
+ * @returns isUserValid(bool)
+ */
+app.post('/loginWithId', (request, response) => {
+    let userCredentialsId = request.body.userCredentialsId
+    //if any data is missing, send error response back
+    if (!userCredentialsId.userId || !userCredentialsId.username) {
+        response.status(400).send({
+            error: "missing data in request"
+        })
+    } else {
+        try {
+            //retrieve requested data from users table
+            connection.query(`SELECT * FROM users WHERE id = ? AND username = ? `, [userCredentialsId.userId, userCredentialsId.username],
+                function (error, result, fields) {
+                    //if result is not empty, return true else return false
+                    if (result.length != 0) {
+                        response.status(200).send({
+                            isUserValid: true
+                        })
+                    } else {
+                        response.status(401).send({
+                            isUserValid: false
+                        })
+                    }
+                })
+        } catch (error) {
+            response.status(500).send(error.message)
+        }
+    }
+
+
+
+})
+
+/**
+ * POST endpoint check if user credentials is valid
+ * 
+ * @params userCredentials
+ * @returns userData
+ */
+app.post("/login", (request, response) => {
+    userCredentials = request.body.userCredentials
+    //if any data is missing in request, send error response back
+    if (!userCredentials.username || !userCredentials.password) {
+        response.status(400).send({
+            error: "missing username or passwords"
+        })
+    } else {
+        try {
+            // retrieve requested data from users table
+            connection.query(`SELECT * FROM users WHERE username = ? and password = ?`, [userCredentials.username, userCredentials.password],
+                function (error, result, fields) {
+                    // if result is not empty, send userData back in response
+                    if (result.length != 0) {
+                        response.status(200).send({
+                            userData: {
+                                userId: result[0].id,
+                                username: result[0].username
+                            }
+                        })
+                        //else send error back in response
+                    } else {
+                        response.status(401).send({
+                            error: "user doesn't exist"
+                        })
+                    }
+                })
+        } catch (error) {
+            console.log(error.message);
+            response.status(500).send(error)
+        }
+
+    }
 
 })
 
@@ -185,7 +287,7 @@ app.delete("/deleteRoom", (request, response) => {
     //TODO: delete room and room data from database
     try {
         // retrieving room to check if it exists
-        connection.query(`SELECT * FROM rooms WHERE (roomName) like (?)`, [roomName],
+        connection.query(`SELECT * FROM rooms WHERE (roomName) LIKE (?)`, [roomName],
             function (error, results, fields) {
                 if (!results.length) {
                     //if the room is not inside database send error response back
@@ -194,8 +296,8 @@ app.delete("/deleteRoom", (request, response) => {
                     })
                 } else {
                     // remove all data from room in rooms and sensorData tables
-                    connection.execute(`DELETE FROM rooms WHERE (roomName) like (?) `, [roomName])
-                    connection.execute(`DELETE FROM sensorData WHERE (room) like (?) `, [roomName])
+                    connection.execute(`DELETE FROM rooms WHERE (roomName) LIKE (?) `, [roomName])
+                    connection.execute(`DELETE FROM sensorData WHERE (room) LIKE (?) `, [roomName])
                     response.status(200).send({
                         result: "ok"
                     })
