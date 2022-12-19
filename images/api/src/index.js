@@ -2,6 +2,10 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const connection = require('./database/connection.js')
 const cors = require('cors')
+const {
+    request,
+    response
+} = require("express")
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
@@ -36,6 +40,11 @@ app.listen(3000, (err) => {
  * sensordata {
  *              value(int),
  *              date(date) 
+ * }
+ * 
+ * userCredentialsId{
+ *          userId(int);
+ *          username(str)
  * }
  */
 
@@ -101,8 +110,8 @@ app.post("/addRoom", (request, response) => {
                     let querry = connection.query(`INSERT INTO rooms (roomName) VALUES (?)`, [roomName],
                         function (error, result, fields) {
                             response.status(200).send({
-                                room:{
-                                    roomId : result.id,
+                                room: {
+                                    roomId: result.id,
                                     roomName: result.roomName
                                 }
                             })
@@ -156,6 +165,45 @@ app.post("/getRoomData", async (request, response) => {
     } catch (error) {
         response.status(400).send(error)
     }
+
+
+})
+
+
+/**
+ * POST endpoint, check if user credentials are correct
+ * 
+ * @params userCredentialsId
+ * @returns isUserValid(bool)
+ */
+app.post('/loginWithId', (request, response) => {
+    let userCredentialsId = request.body.userCredentialsId
+    //if any data is missing, send error response back
+    if (!userCredentialsId.userId || !userCredentialsId.username) {
+        response.status(400).send({
+            error: "missing data in request"
+        })
+    } else {
+        try {
+            //retrieve requested data from users table
+            connection.query(`SELECT * FROM users WHERE id = ? AND username = ? `, [userCredentialsId.userId, userCredentialsId.username],
+                function (error, result, fields) {
+                    //if result is not empty, return true else return false
+                    if (result.length != 0) {
+                        response.status(200).send({
+                            isUserValid: true
+                        })
+                    } else {
+                        response.status(401).send({
+                            isUserValid: false
+                        })
+                    }
+                })
+        } catch (error) {
+            response.status(500).send(error.message)
+        }
+    }
+
 
 
 })
