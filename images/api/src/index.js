@@ -184,23 +184,25 @@ app.post("/getRoomData", async (request, response) => {
  */
 app.post("/login", (request, response) => {
     userCredentials = request.body.userCredentials
-    console.log(userCredentials);
+    //if any data is missing in request, send error response back
     if (!userCredentials.username || !userCredentials.password) {
         response.status(400).send({
             error: "missing username or passwords"
         })
     } else {
         try {
-            connection.query(`SELECT * FROM users WHERE username = ? and password = ?`,[userCredentials.username, userCredentials.password],
+            // retrieve requested data from users table
+            connection.query(`SELECT * FROM users WHERE username = ? and password = ?`, [userCredentials.username, userCredentials.password],
                 function (error, result, fields) {
-
-                    if (result != undefined) {
+                    // if result is not empty, send userData back in response
+                    if (result.length != 0) {
                         response.status(200).send({
                             userData: {
                                 userId: result[0].id,
                                 username: result[0].username
                             }
                         })
+                        //else send error back in response
                     } else {
                         response.status(401).send({
                             error: "user doesn't exist"
