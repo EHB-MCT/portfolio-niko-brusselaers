@@ -1,5 +1,8 @@
+import displayAdminPage from "./admin/displayAdminPage.js"
 import getAllRooms from "./fetch/getAllRooms.js"
 import getRoomData from "./fetch/getRoomData"
+import login from "./fetch/login.js"
+import loginWithId from "./fetch/loginWithId"
 import getAverageNumber from "./math/getAverageNumber.js"
 import getGraph from "./math/getGraph.js"
 
@@ -27,16 +30,22 @@ const roomPages = document.querySelector('#roomLinks')
  * @returns
  */
 roomPages.addEventListener("click", async (element) => {
+    //remove activePage class from all navlinks in navigation
+    const navLinks = document.getElementsByClassName("navLinks")
+    for (let i = 0; i < navLinks.length; i++) {
+        navLinks[i].classList.remove("activePage")
+    }
     if (element.target != element.currentTarget) {
-        var filterdData = await getRoomData(element.target.innerHTML)
-        let mainContainer = document.getElementById("mainContainer")
+        element.target.classList.add("activePage")
+        var FILTERED_DATA = await getRoomData(element.target.innerHTML)
+        const mainContainer = document.getElementById("mainContainer")
         // get average for hour,day,week,month
         let average = {
-            current: filterdData.current,
-            hour: getAverageNumber(filterdData.hour),
-            day: getAverageNumber(filterdData.day),
-            week: getAverageNumber(filterdData.week),
-            month: getAverageNumber(filterdData.month),
+            current: FILTERED_DATA.current,
+            hour: getAverageNumber(FILTERED_DATA.hour),
+            day: getAverageNumber(FILTERED_DATA.day),
+            week: getAverageNumber(FILTERED_DATA.week),
+            month: getAverageNumber(FILTERED_DATA.month),
         }
         // insert roomData with html template inside mainContainer
         mainContainer.innerHTML = `
@@ -71,8 +80,9 @@ roomPages.addEventListener("click", async (element) => {
                         <a href="#" id='month'>month graph</a>
                     </div>
                     </div>`
+
         //create a new grap showing data from past hour
-        getGraph(filterdData.hour, 'hour')
+        getGraph(FILTERED_DATA.hour, 'hour')
 
         //create an eventlistener to check if any hyperlinks are clicked in grapOptions 
         const graphOptions = document.querySelector("#graphOptions")
@@ -86,22 +96,56 @@ roomPages.addEventListener("click", async (element) => {
                 // create a new chart depending on what hyperlink has been clicked and update canvas element
                 switch (element.target.id) {
                     case "hour":
-                        getGraph(filterdData.hour, 'hour')
+                        getGraph(FILTERED_DATA.hour, 'hour')
                         break;
                     case "day":
-                        getGraph(filterdData.day, 'day')
+                        getGraph(FILTERED_DATA.day, 'day')
                         break;
                     case "week":
-                        getGraph(filterdData.week, 'week')
+                        getGraph(FILTERED_DATA.week, 'week')
                         break;
                     case "month":
-                        getGraph(filterdData.month, 'month')
+                        getGraph(FILTERED_DATA.month, 'month')
                         break;
 
 
                 }
             }
         })
+
+    }
+})
+
+const adminPage = document.getElementById('adminPage')
+
+adminPage.addEventListener('click', async () => {
+    const mainContainer = document.getElementById('mainContainer')
+    let isLoggedIn = await loginWithId()
+    //if user has logged in during current session, show admin page
+    if (isLoggedIn) {
+        displayAdminPage()
+    } else {
+        //if user hasn't previously logged in during current session, insert login form
+        const mainContainer = document.getElementById('mainContainer')
+        mainContainer.innerHTML = `
+        <form id="loginForm" class="loginForm">
+            <h1>login</h1>
+            <input type="text" name="username" id="username" placeholder="username">
+            <input type="password" name="password" id="password" placeholder="password">
+            <button type="submit">submit</button>
+        </form>
+        `
+        //create a eventlistener on loginForm and do a fetch call to check userCredentials when user submits form
+        const loginForm = document.getElementById('loginForm')
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            isLoggedIn = login()
+            //if user credentials are valid, show admin page
+            if (isLoggedIn) {
+                displayAdminPage()
+            }
+        })
+
 
     }
 })

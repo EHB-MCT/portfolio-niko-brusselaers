@@ -1,0 +1,39 @@
+const url = "http://localhost:3001"
+
+
+/**
+ * login user with stored userId
+ * 
+ * @returns isLoggedIn(bool)
+ */
+const loginWithId = async () => {
+    let isLoggedIn = false
+    // retrieve userId and username from sessionStorage
+    const userCredentialsId = {
+        userId: sessionStorage.getItem("userId") || null,
+        username: sessionStorage.getItem("username") || null
+    }
+    // if either userId or username are empty return isLoggedIn as false
+    if (userCredentialsId.userId == null || userCredentialsId.username == null) {
+        isLoggedIn = false
+    } else {
+        // if userId and username are present, do a fetch call to check if credentials are valid
+        await fetch(`${url}/loginWithId`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userCredentialsId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // set isLoggedIn to true or false depending on response
+                isLoggedIn = data.isUserValid
+            })
+    }
+    return isLoggedIn
+}
+
+export default loginWithId

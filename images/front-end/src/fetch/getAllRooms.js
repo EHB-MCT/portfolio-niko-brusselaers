@@ -13,7 +13,7 @@ const getAllRooms = () => {
             const roomLinks = document.getElementById('roomLinks')
             let innerHTML = ``
             data.roomNames.forEach(element => {
-                innerHTML += `<a href="#">${element}</a>`
+                innerHTML += `<a href="#" class="navLinks">${element}</a>`
             });
             roomLinks.innerHTML = innerHTML
         })

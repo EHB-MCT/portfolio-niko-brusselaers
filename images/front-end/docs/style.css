@@ -75,7 +75,7 @@ nav a {
 }
 
 /****************
-****** main ******
+****** main *****
 ****************/
 
 h1.greetingTitle {
@@ -84,6 +84,10 @@ h1.greetingTitle {
     margin-top: 30vh;
     font-size: 50pt;
 }
+
+/********************
+****** roomData *****
+*********************/
 
 div.dataAverages {
     display: flex;
@@ -146,7 +150,142 @@ div.graphOptions a:last-child {
     border: none;
 }
 
+div.graphOptions a:hover {
+    background-color: rgba(197, 197, 197, 0.656)
+}
+
 .chartContainer {
     width: 80% !important;
     height: 95% !important;
+}
+
+/*****************
+****** login *****
+*****************/
+
+form.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 13vw;
+    margin: 25vh 32vw;
+    padding: 5rem;
+    background-color: var(--white);
+    border-radius: 4rem;
+    -webkit-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+}
+
+
+form.loginForm input {
+    width: 10rem;
+    height: 2rem;
+    padding: .5rem 3rem;
+    border-radius: 4rem;
+    margin: 2rem 0 0;
+    background-color: var(--black);
+    color: var(--white);
+
+
+}
+
+form.loginForm button {
+    width: 7vw;
+    height: 2rem;
+    margin-top: 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: 4rem;
+
+}
+
+form.loginForm h1 {
+    align-self: flex-start;
+    color: var(--black);
+}
+
+/*********************
+****** adminPage *****
+*********************/
+
+div#adminPageContainer {
+    margin: 10vh 15vw 0 15vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-radius: 4rem;
+    -webkit-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 16px 0px rgba(0, 0, 0, 0.75);
+}
+
+div.addRoom {
+    margin: 5rem 0 5rem 5rem;
+}
+
+form#addRoomForm {
+    margin-top: 2rem;
+
+}
+
+form#addRoomForm button {
+    margin: 1rem 0;
+    align-self: center;
+    width: 10rem;
+    height: 2rem;
+    border-radius: 4rem;
+    background-color: var(--black);
+    color: var(--white)
+}
+
+form#addRoomForm input {
+    width: 15rem;
+    height: 2rem;
+    padding: 0 2.5rem;
+    border-radius: 4rem;
+    color: var(--white);
+    background-color: var(--black);
+}
+
+div.deleteRoom {
+    margin: 5rem 0 5rem 5rem;
+}
+
+div#roomsContainer {
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 42vw;
+    height: 32vh;
+    overflow: auto;
+
+}
+
+div#roomsContainer div {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    height: 3rem;
+    width: 12rem;
+    padding: 1rem 1.5rem;
+    background-color: var(--black);
+    border-radius: 4rem;
+    margin: 1rem 1rem 1rem 0;
+
+}
+
+div#roomsContainer div h2{
+    color: var(--white)
+}
+
+div#roomsContainer div button{
+    padding: 1rem 1.25rem;
+    border-radius: 100rem;
+    background-color: var(--white);
+    color: var(--black);
+    font-weight: bold;
 }
