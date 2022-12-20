@@ -50,3 +50,11 @@
     - loginWithId endpoint
   - mysql
     - users table with collumns: id, username and password
+
+## [0.5.2] - 2022-12-20
+
+### added
+  - front-end website
+    - add rooms to collect data from
+    - remove rooms
+    - view all noise level data from saved rooms
