@@ -58,3 +58,9 @@
     - add rooms to collect data from
     - remove rooms
     - view all noise level data from saved rooms
+
+## [0.5.3] - 2022-12-20
+
+### added
+  - api
+    - periodic restart to make sure the api stays online
