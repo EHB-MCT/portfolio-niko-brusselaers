@@ -11,3 +11,4 @@
     -   chart.js : https://www.youtube.com/watch?v=sE08f4iuOhA&ab_channel=TraversyMedia
     -   How To Create Custom Scrollbars: https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp
     -   how to deploy a static website in docker container: https://dailysmarty.com/posts/steps-for-deploying-a-static-html-site-with-docker-and-nginx
+    -   restart docker container periodically: https://gist.github.com/kizzx2/782b500a81ce46b889903b1f80353f21
