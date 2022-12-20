@@ -6,6 +6,14 @@ services:
       volumes:
        - /var/run/docker.sock:/var/run/docker.sock
 
+  front-end:
+    build: ./images/front-end
+    container_name: front-end
+    ports:
+      - 80:80
+    environment:
+      API_URL: api
+
   api:
     build: ./images/api
     container_name: api

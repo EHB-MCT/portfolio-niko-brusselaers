@@ -14,8 +14,6 @@ import getAllRooms from "../fetch/getAllRooms";
  */
 const displayAdminPage = async (URL) => {
     const mainContainer = document.getElementById('mainContainer')
-    console.log('test');
-    console.log(URL);
     let allRooms = await getAllRooms(URL)
     mainContainer.innerHTML = `
         <div id="adminPageContainer">
@@ -36,7 +34,6 @@ const displayAdminPage = async (URL) => {
             </div>
         </div>`
     let innerHTML = ``
-    console.log(allRooms);
     allRooms.forEach(async (roomName) => {
         innerHTML += `
                     <div>
@@ -60,7 +57,6 @@ const displayAdminPage = async (URL) => {
         const roomLinks = document.getElementById('roomLinks')
         const roomName = document.getElementById("roomName").value
         const addRoomResult = await addRoom(roomName, URL)
-        console.log(addRoomResult);
         if (addRoomResult) {
             innerHTML = ``
             allRooms = await getAllRooms(URL)

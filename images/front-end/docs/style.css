@@ -44,7 +44,7 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--black)
+    background: var(--black);
 }
 
 
@@ -168,7 +168,7 @@ div.graphOptions a:last-child {
 }
 
 div.graphOptions a:hover {
-    background-color: rgba(197, 197, 197, 0.656)
+    background-color: rgba(197, 197, 197, 0.656);
 }
 
 .chartContainer {
@@ -300,7 +300,7 @@ div#roomsContainer div {
 }
 
 div#roomsContainer div h2 {
-    color: var(--white)
+    color: var(--white);
 }
 
 div#roomsContainer div button {

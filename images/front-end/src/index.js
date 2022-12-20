@@ -6,8 +6,7 @@ import loginWithId from "./fetch/loginWithId"
 import getAverageNumber from "./math/getAverageNumber.js"
 import getGraph from "./math/getGraph.js"
 
-var URL = "http://localhost:3001"
-
+var URL = `http://${location.host}:3001`
 
 /**
  * get all rooms when loading page and insert all roomnames in navigation
