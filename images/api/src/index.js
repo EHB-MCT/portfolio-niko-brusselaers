@@ -248,19 +248,6 @@ app.post("/login", async (request, response) => {
 
 })
 
-/**
- * PUT endpoint, update existing room inside database
- * 
- * @params object room, containing id(int), roomName(str) and newRoomSensor(str)
- * @returns object with result of updated room
- */
-app.put("/updateRoomSensor", (request, response) => {
-
-    //TODO: update room sensor from certain room inside database
-
-})
-
-
 
 /** 
  * DELETE endpoint, delete room out database
