@@ -13,7 +13,7 @@ app.use(express.static("../docs"))
 
 app.listen(3000, (err) => {
     if (!err) {
-        console.log("http://localhost:3000");
+        console.log(`running on port 3001`);
     } else {
         console.log(err);
     }
@@ -110,7 +110,6 @@ app.post("/addRoom", async (request, response) => {
     try {
         // retrieving all room names from rooms table and sending data back via response
         let result = await executeQuery(`SELECT * FROM rooms where roomName LIKE ?`, roomName)
-        console.log(result);
         if (result.length == 0) {
             result = await executeQuery(`INSERT INTO rooms (roomName) VALUES (?)`, roomName)
             response.status(200).send({

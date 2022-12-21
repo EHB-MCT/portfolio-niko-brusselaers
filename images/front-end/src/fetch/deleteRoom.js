@@ -25,7 +25,6 @@ const deleteRoom = async (roomName, URL) => {
         //if room has been succesfully deleted return true
         .then(data => {
             if (statusCode == 200) {
-                console.log(data);
                 roomIsDeleted = true
             } else {
                 console.log(data);

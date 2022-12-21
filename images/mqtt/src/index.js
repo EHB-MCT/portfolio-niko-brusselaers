@@ -51,7 +51,6 @@ client.on('message', async (topic, payload) => {
     if (topic === 'arduino/getSensorData') {
         try {
             let roomData = JSON.parse(payload.toString())
-            console.log(roomData);
             if (Math.abs(roomData.sensorValue) <= 110) {
                 connection.query(`INSERT INTO sensorData (room, sensorDevice,value) VALUES (?,?,?)`, [roomData.room, roomData.deviceName, Math.abs(roomData.sensorValue)])
             }

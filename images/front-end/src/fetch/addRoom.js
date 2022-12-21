@@ -25,7 +25,6 @@ const addRoom = async (roomName, URL) => {
         // if new room is succesfully added, return true
         .then(data => {
             if (statusCode == 200) {
-                console.log(data);
                 roomIsAdded = true
             } else {
                 console.log(data);
