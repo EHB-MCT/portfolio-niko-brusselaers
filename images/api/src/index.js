@@ -274,7 +274,7 @@ app.delete("/deleteRoom", async (request, response) => {
     try {
         // retrieving room to check if it exists
         let result = await executeQuery(`SELECT * FROM rooms WHERE (roomName) LIKE (?)`, roomName)
-        if (!results.length) {
+        if (!result.length) {
             //if the room is not inside database send error response back
             response.status(400).send({
                 error: "room doesnt exist"

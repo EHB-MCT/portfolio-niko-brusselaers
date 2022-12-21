@@ -70,3 +70,14 @@
 ## changed
   - api
     - getAllRooms endpoint: refactor code to optimize
+
+## [0.5.5] - 2022-12-21
+
+## changed
+  - api
+    - getAllRooms endpoint: refactor code of endpoints to optimize:
+      - getRoomData
+      - addRoom
+      - deleteRoom
+      - login
+      - loginWithId
