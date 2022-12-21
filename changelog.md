@@ -93,3 +93,10 @@
     - unnecessary console.log() from code 
     - unused updateRoomSensor endpoint
 
+## [0.5.7] 2022-12-21
+
+  ### updated
+  - front-end
+    - api url port to port forwarded port on the router
+
+
