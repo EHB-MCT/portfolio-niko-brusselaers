@@ -64,3 +64,9 @@
 ### added
   - api
     - periodic restart to make sure the api stays online
+
+## [0.5.4] - 2022-12-21
+
+## changed
+  - api
+    - getAllRooms endpoint: refactor code to optimize
