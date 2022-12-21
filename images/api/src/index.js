@@ -1,11 +1,7 @@
 const express = require("express")
 const bodyParser = require('body-parser')
-const connection = require('./database/connection.js')
 const cors = require('cors')
-const {
-    request,
-    response
-} = require("express")
+const getData = require('./database/getData.js')
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
@@ -82,16 +78,14 @@ app.get("/getAllRooms", async (request, response) => {
 
     try {
         // retrieving all room names from rooms table and sending data back via response
-        connection.query(`SELECT * FROM rooms `,
-            function (error, results, fields) {
-                let roomNames = []
-                for (let i = 0; i < results.length; i++) {
-                    roomNames.push(results[i].roomName)
-                }
-                response.status(200).send({
-                    roomNames: roomNames
-                })
-            })
+        let result = await getData(`SELECT * FROM rooms `)
+        let roomNames = []
+        for (let i = 0; i < result.length; i++) {
+            roomNames.push(result[i].roomName)
+        }
+        response.status(200).send({
+            roomNames: roomNames
+        })
     } catch (error) {
         //displaying error in terminal and sending it back via response
         console.log(error);
