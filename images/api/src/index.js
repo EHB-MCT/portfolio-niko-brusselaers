@@ -1,7 +1,7 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const getData = require('./database/getData.js')
+const executeQuery = require('./database/executeQuery.js')
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
@@ -78,7 +78,7 @@ app.get("/getAllRooms", async (request, response) => {
 
     try {
         // retrieving all room names from rooms table and sending data back via response
-        let result = await getData(`SELECT * FROM rooms `)
+        let result = await executeQuery(`SELECT * FROM rooms `)
         let roomNames = []
         for (let i = 0; i < result.length; i++) {
             roomNames.push(result[i].roomName)
@@ -148,27 +148,23 @@ app.post("/getRoomData", async (request, response) => {
 
     try {
         //retrieving room sensor data from sensorData table
-        connection.promise().query(`SELECT * FROM (sensorData) WHERE room LIKE (?)`, [roomName])
-            .then(([rows, fields]) => {
-                console.log(rows);
-                // making a new object roomData with roomName and a array of sensorData
-                console.log(rows[2].value);
-                let roomData = {
-                    roomName: rows[0].room,
-                    temperatureData: []
+        let result = await executeQuery(`SELECT * FROM (sensorData) WHERE room LIKE (?)`, roomName)
+        // making a new object roomData with roomName and a array of sensorData
+        let roomData = {
+            roomName: result[0].room,
+            temperatureData: []
+        }
 
-                }
-
-                for (let i = 0; i < rows.length; i++) {
-                    roomData.temperatureData.push({
-                        value: rows[i].value,
-                        date: rows[i].date
-                    })
-                }
-
-                response.status(200).send(roomData)
-
+        for (let i = 0; i < result.length; i++) {
+            roomData.temperatureData.push({
+                value: result[i].value,
+                date: result[i].date
             })
+        }
+        //sending roomData back in response
+        response.status(200).send(roomData)
+
+
     } catch (error) {
         response.status(400).send(error)
     }
