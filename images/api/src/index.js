@@ -146,19 +146,26 @@ app.post("/getRoomData", async (request, response) => {
         //retrieving room sensor data from sensorData table
         let result = await executeQuery(`SELECT * FROM (sensorData) WHERE room LIKE (?)`, roomName)
         // making a new object roomData with roomName and a array of sensorData
-        let roomData = {
-            roomName: result[0].room,
-            temperatureData: []
-        }
+        if (result.length != 0) {
+            let roomData = {
+                roomName: result[0].room,
+                temperatureData: []
+            }
 
-        for (let i = 0; i < result.length; i++) {
-            roomData.temperatureData.push({
-                value: result[i].value,
-                date: result[i].date
+            for (let i = 0; i < result.length; i++) {
+                roomData.temperatureData.push({
+                    value: result[i].value,
+                    date: result[i].date
+                })
+            }
+            //sending roomData back in response
+            response.status(200).send(roomData)
+        } else {
+            response.status(404).send({
+                error: `no noise level data for ${roomName} found`
             })
         }
-        //sending roomData back in response
-        response.status(200).send(roomData)
+
 
 
     } catch (error) {
