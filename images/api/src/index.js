@@ -1,7 +1,6 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const getData = require('./database/getData.js')
 const executeQuery = require("./database/executeQuery.js")
 const app = express()
 app.use(bodyParser.urlencoded({
@@ -275,27 +274,25 @@ app.put("/updateRoomSensor", (request, response) => {
  * @params object room, containing id(int) and roomName(str) 
  * @returns object with result(str) and statuscode(int)
  */
-app.delete("/deleteRoom", (request, response) => {
+app.delete("/deleteRoom", async (request, response) => {
     let roomName = request.body.roomName
     //TODO: delete room and room data from database
     try {
         // retrieving room to check if it exists
-        connection.query(`SELECT * FROM rooms WHERE (roomName) LIKE (?)`, [roomName],
-            function (error, results, fields) {
-                if (!results.length) {
-                    //if the room is not inside database send error response back
-                    response.status(400).send({
-                        error: "room doesnt exist"
-                    })
-                } else {
-                    // remove all data from room in rooms and sensorData tables
-                    connection.execute(`DELETE FROM rooms WHERE (roomName) LIKE (?) `, [roomName])
-                    connection.execute(`DELETE FROM sensorData WHERE (room) LIKE (?) `, [roomName])
-                    response.status(200).send({
-                        result: "ok"
-                    })
-                }
+        let result = await executeQuery(`SELECT * FROM rooms WHERE (roomName) LIKE (?)`, roomName)
+        if (!results.length) {
+            //if the room is not inside database send error response back
+            response.status(400).send({
+                error: "room doesnt exist"
             })
+        } else {
+            // remove all data from room in rooms and sensorData tables
+            await executeQuery(`DELETE FROM rooms WHERE (roomName) LIKE (?) `, roomName)
+            await executeQuery(`DELETE FROM sensorData WHERE (room) LIKE (?) `, roomName)
+            response.status(200).send({
+                result: "ok"
+            })
+        }
     } catch (error) {
         //displaying error in terminal and sending it back via response
         console.log(error);
