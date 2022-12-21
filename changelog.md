@@ -67,13 +67,13 @@
 
 ## [0.5.4] - 2022-12-21
 
-## changed
+### changed
   - api
     - getAllRooms endpoint: refactor code to optimize
 
 ## [0.5.5] - 2022-12-21
 
-## changed
+### changed
   - api
     - getAllRooms endpoint: refactor code of endpoints to optimize:
       - getRoomData
@@ -81,3 +81,15 @@
       - deleteRoom
       - login
       - loginWithId
+
+## [0.5.6] 2022-12-21
+
+  ### fixed
+  - api
+    - added error handeling for getRoomData
+
+  ### removed
+  - api
+    - unnecessary console.log() from code 
+    - unused updateRoomSensor endpoint
+
