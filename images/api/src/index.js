@@ -2,6 +2,7 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const getData = require('./database/getData.js')
+const executeQuery = require("./database/executeQuery.js")
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
@@ -103,31 +104,28 @@ app.get("/getAllRooms", async (request, response) => {
  * @params object roomName(str)
  * @returns object with result of inserted room
  */
-app.post("/addRoom", (request, response) => {
+app.post("/addRoom", async (request, response) => {
     const roomName = request.body.roomName
 
     //TODO: insert room inside database
     try {
         // retrieving all room names from rooms table and sending data back via response
-        connection.query(`SELECT * FROM rooms where roomName LIKE ?`, [roomName],
-            function (error, result, fields) {
-                console.log(result);
-                if (result.length == 0) {
-                    let querry = connection.query(`INSERT INTO rooms (roomName) VALUES (?)`, [roomName],
-                        function (error, result, fields) {
-                            response.status(200).send({
-                                room: {
-                                    roomId: result.id,
-                                    roomName: result.roomName
-                                }
-                            })
-                        })
-                } else {
-                    response.status(400).send({
-                        error: 'room already exists'
-                    })
+        let result = await executeQuery(`SELECT * FROM rooms where roomName LIKE ?`, roomName)
+        console.log(result);
+        if (result.length == 0) {
+            result = await executeQuery(`INSERT INTO rooms (roomName) VALUES (?)`, roomName)
+            response.status(200).send({
+                room: {
+                    roomId: result.id,
+                    roomName: result.roomName
                 }
             })
+
+        } else {
+            response.status(400).send({
+                error: 'room already exists'
+            })
+        }
     } catch (error) {
         //displaying error in terminal and sending it back via response
         console.log(error);
