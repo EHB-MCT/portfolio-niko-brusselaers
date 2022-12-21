@@ -1,7 +1,7 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const getData = require('./database/getData.js')
+const executeQuery = require('./database/executeQuery.js')
 const app = express()
 app.use(bodyParser.urlencoded({
     extended: true
@@ -78,7 +78,7 @@ app.get("/getAllRooms", async (request, response) => {
 
     try {
         // retrieving all room names from rooms table and sending data back via response
-        let result = await getData(`SELECT * FROM rooms `)
+        let result = await executeQuery(`SELECT * FROM rooms `)
         let roomNames = []
         for (let i = 0; i < result.length; i++) {
             roomNames.push(result[i].roomName)
@@ -183,7 +183,7 @@ app.post("/getRoomData", async (request, response) => {
  * @params userCredentialsId
  * @returns isUserValid(bool)
  */
-app.post('/loginWithId', (request, response) => {
+app.post('/loginWithId', async (request, response) => {
     let userCredentialsId = request.body.userCredentialsId
     //if any data is missing, send error response back
     if (!userCredentialsId.userId || !userCredentialsId.username) {
@@ -193,19 +193,18 @@ app.post('/loginWithId', (request, response) => {
     } else {
         try {
             //retrieve requested data from users table
-            connection.query(`SELECT * FROM users WHERE id = ? AND username = ? `, [userCredentialsId.userId, userCredentialsId.username],
-                function (error, result, fields) {
-                    //if result is not empty, return true else return false
-                    if (result.length != 0) {
-                        response.status(200).send({
-                            isUserValid: true
-                        })
-                    } else {
-                        response.status(401).send({
-                            isUserValid: false
-                        })
-                    }
+            let result = await executeQuery(`SELECT * FROM users WHERE (id,username) = (?)`, [userCredentialsId.userId, userCredentialsId.username])
+            //if result is not empty, return true else return false
+            if (result.length != 0) {
+                response.status(200).send({
+                    isUserValid: true
                 })
+            } else {
+                response.status(401).send({
+                    isUserValid: false
+                })
+            }
+
         } catch (error) {
             response.status(500).send(error.message)
         }
