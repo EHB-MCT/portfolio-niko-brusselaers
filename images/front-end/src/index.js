@@ -3,8 +3,8 @@ import getAllRooms from "./fetch/getAllRooms.js"
 import getRoomData from "./fetch/getRoomData"
 import login from "./fetch/login.js"
 import loginWithId from "./fetch/loginWithId"
-import getAverageNumber from "./math/getAverageNumber.js"
 import getGraph from "./math/getGraph.js"
+const getAverageNumber = require('./math/getAverageNumber.js')
 
 var URL = `http://${location.host}:4000`
 

@@ -7,12 +7,14 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^29.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   }

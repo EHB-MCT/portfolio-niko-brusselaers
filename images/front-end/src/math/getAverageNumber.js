@@ -15,6 +15,7 @@
  */
 const getAverageNumber = (dataArray) => {
     //count all numbers in dataArray up and store in average variable
+    
     const average = dataArray.reduce((total, data) => {
         return total + data.value
     }, 0)
@@ -22,7 +23,8 @@ const getAverageNumber = (dataArray) => {
     const averageNumber = average / dataArray.length
 
     return Math.round(averageNumber)
+    
 
 }
 
-export default getAverageNumber
+module.exports = getAverageNumber

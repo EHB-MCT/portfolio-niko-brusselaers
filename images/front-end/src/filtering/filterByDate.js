@@ -63,4 +63,4 @@ const filterByDate = (dataArray) => {
 
 }
 
-export default filterByDate
+module.exports = filterByDate

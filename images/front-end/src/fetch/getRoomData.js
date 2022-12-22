@@ -1,6 +1,4 @@
-import filterByDate from "../filtering/filterByDate"
-import getAverageNumber from "../math/getAverageNumber"
-import getGraph from "../math/getGraph"
+const filterByDate = require("../filtering/filterByDate")
 
 
 /**
