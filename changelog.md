@@ -99,4 +99,11 @@
   - front-end
     - api url port to port forwarded port on the router
 
+## [0.6.7] 2022-12-22
 
+### added
+  - front-end
+    - testing for filterByDate function
+  - arduino
+    - psuedo data code to test out connection to broker and database is working
+    - sensor data code to run to place devices in diffrent rooms and record data
