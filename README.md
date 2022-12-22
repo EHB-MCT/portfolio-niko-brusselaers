@@ -7,12 +7,12 @@ people an general overview how loud it is in certain room/spaces and to let plan
 ## Table of content
 - [Portfolio Brusselaers Niko](#portfolio-brusselaers-niko)
   - [Table of content](#table-of-content)
-  - [Instalation](#instalation)
+  - [Installation](#installation)
     - [Requirements](#requirements)
     - [Setup](#setup)
   - [license](#license)
   - [links](#links)
-## Instalation
+## Installation
 ### Requirements
 to install and run this application you will need the following:
   - docker: 
@@ -44,7 +44,7 @@ open shell terminal and navigate to the folder containing application files, and
 
 if you are using arduino devices to record data:
   - psuedo data: unzip psuedo data zip file and rename folder to `arduino_volume_sensor_mqtt`.
-  open up `arduino_volume_sensor_mqtt/ino` inside folder.
+  open up `arduino_volume_sensor_mqtt.ino` inside folder.
   Update espMQTTClient and enter all with your wifi and broker credentials
   update room to the name of the room you are placing it in and set the desired device name in the deviceName variable.
   Connect your arduino to the computer and select the drivers the arduino needs and the usb port its been connected to.
@@ -52,7 +52,7 @@ if you are using arduino devices to record data:
 
 
   - sensor data: unzip psuedo data zip file and rename folder to `arduino_volume_sensor_mqtt`.
-  open up `arduino_volume_sensor_mqtt/ino` inside folder.
+  open up `arduino_volume_sensor_mqtt.ino` inside folder.
   Update espMQTTClient and enter all with your wifi and broker credentials
   update room to the name of the room you are placing it in and set the desired device name in the deviceName variable,
   update the soundSensorPin variable to the pin where you going to connect the analog pin of the sound sensor.
